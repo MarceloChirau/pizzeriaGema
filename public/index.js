@@ -1,4 +1,5 @@
 const pizzaContainer=document.getElementById('pizza-container');
+document.getElementById("year").innerHTML = new Date().getFullYear();
 
 const displayPizzas=async()=>{
     try{

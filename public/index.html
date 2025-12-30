@@ -13,8 +13,12 @@
 </head>
 <body>
 
-    <header class="top-bar">
-        <h1>Pizzeria Gema</h1>
+    <header  class="top-bar">
+        <a href="#brand-link" class="brand-link">
+            <h1  >Pizzeria Gema</h1>
+
+        </a>
+
         <a href="tel:+385925064164" class="call-button" aria-label="Call Pizzeria Gema">
             <i class="fa-solid fa-phone"></i>
         </a>
@@ -22,18 +26,28 @@
 
     </header>
 
-    <div class="hero-img">
-        <img src="img/mainPic.jpg" alt="pizza oven">
-    </div>
-    <main id="pizza-container">
-        
-        <p>Loading the delicious menu...</p>
+    
+    <main >
+        <div id="brand-link" class="hero-img">
+            <img src="img/mainPic.jpg" alt="pizza oven">
+        </div>
+        <div id="pizza-container">
+            <p>Loading the delicious menu...</p>
+        </div>
+        <div class="map-container">
+            <a href="https://maps.app.goo.gl/BdLqFoX3uVTx5tx56" target="_blank">
+                <img class="google-map" src="img/google-map.png" alt="gema_location">
+            </a>
+        </div>
     </main>
-    <div class="map-container">
-        <a href="https://maps.app.goo.gl/BdLqFoX3uVTx5tx56" target="_blank">
-            <img class="google-map" src="img/google-map.png" alt="gema_location">
-        </a>
-    </div>
+    <hr>
+   <footer class="footer-container">
+<p>&copy; <span id="year" ></span>Pizzeria Gema. All rights reserved </p>
+<a href="https://web.facebook.com/profile.php?id=100045127672707&_rdc=1&_rdr#" target="_blank">
+    <i class="fa-brands fa-facebook-f"></i>
+</a>
+    
+   </footer>
     <script src="index.js"></script>
 </body>
 </html>
