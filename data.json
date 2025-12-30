@@ -1,0 +1,158 @@
+[
+    {
+      "name": "MARGHARITA",
+      "ingredients": ["rajčica", "sir gauda", "maslina"],
+      "prices": { "large": 7.80, "small": 7.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "FUNGHI/GLJIVE",
+      "ingredients": ["rajčica", "sir gauda", "šampinjoni", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "ŠUNKA/VESUVIO",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "MIJEŠANA/CAPRICCIOSA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "šampinjoni", "panceta", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "JESENSKA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "ajvar", "krastavci", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "NAPOLITANA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "jaje", "panceta", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "KINA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "šampinjoni", "hrenovke", "jaje", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "ČETIRI GODIŠNJA DOBA/QUATTRO STAGIONI",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "dagnje", "tuna", "šampinjoni", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "GURMANSKA/PICANTE",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "kraški vrat", "šampinjoni", "tabasco", "panceta", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "TUNA",
+      "ingredients": ["rajčica", "sir gauda", "tuna", "češnjak", "crveni luk", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "GEMA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "kraški vrat", "jaje", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "CALZONE",
+      "ingredients": ["sir gauda", "šunka", "origano", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "PLODOVI MORA/FRUTTI DI MARE",
+      "ingredients": ["rajčica", "sir gauda", "plodovi mora", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "SLAVONSKA",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "šampinjoni", "kulen", "kiselo vrhnje", "maslina"],
+      "prices": { "large": 9.50, "small": 7.30 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "BIANCA",
+      "ingredients": ["sir gauda", "češnjak u prahu", "vrhnje za kuhanje"],
+      "prices": { "large": 7.90, "small": 7.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "VEGETARIJANSKA/VEGETARIANA",
+      "ingredients": ["rajčica", "sir gauda", "šampinjoni", "paprika", "kapari", "kukuruz", "tikvice", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "QUIRINUS",
+      "ingredients": ["rajčica", "sir gauda", "šunka", "šampinjoni", "panceta", "maslina"],
+      "prices": { "large": 8.50, "small": 7.30 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "PRŠUT/ROYALE PROSCIUTTO",
+      "ingredients": ["rajčica", "sir gauda", "pršut", "šunka", "gljive", "maslinovo ulje", "maslina"],
+      "prices": { "large": 10.00, "small": 8.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "TARTUFI/TARTUFATA ZIGANTE",
+      "ingredients": ["rajčica", "sir gauda", "tartufi", "slatko vrhnje", "šampinjoni", "maslina"],
+      "prices": { "large": 10.00, "small": 8.00 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "ČETIRI SIRA/QUATTRO FORMAGGI",
+      "ingredients": ["rajčica", "sir gauda", "mozzarella", "gorgonzola", "extra tvrdi sir", "maslina"],
+      "prices": { "large": 10.00, "small": 8.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "MEXICANA GRANDE",
+      "ingredients": ["rajčica", "sir gauda", "kukuruz", "grah", "šunka", "paprika", "luk", "feferoni", "panceta", "tabasco", "maslina"],
+      "prices": { "large": 10.00, "small": 8.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "KONOBARSKA",
+      "ingredients": ["rajčica", "sir gauda", "kraški vrat", "panceta", "feferoni", "luk", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "PLANINSKA",
+      "ingredients": ["vrhnje za kuhanje", "sir gauda", "slani bijeli sir", "panceta", "kraški vrat", "luk", "feferoni", "maslina"],
+      "prices": { "large": 9.30, "small": 7.30 },
+      "image": "sunka.jpeg"
+    },
+    {
+      "name": "TIKVICE",
+      "ingredients": ["rajčica", "sir gauda", "šampinjoni", "tikvice", "maslina"],
+      "prices": { "large": 8.20, "small": 7.00 },
+      "image": "funghi.jpeg"
+    },
+    {
+      "name": "RIKOLA",
+      "ingredients": ["sir gauda", "cherry rajčica", "rikola", "aceto balsamico", "maslinovo ulje", "extra tvrdi sir", "rajčica", "maslina"],
+      "prices": { "large": 9.20, "small": 8.00 },
+      "image": "margarita1.jpeg"
+    },
+    {
+      "name": "RIKOLA PRŠUT",
+      "ingredients": ["sir gauda", "pršut", "cherry rajčica", "rikola", "aceto balsamico", "maslinovo ulje", "extra tvrdi sir", "rajčica", "maslina"],
+      "prices": { "large": 10.80, "small": 8.80 },
+      "image": "margarita1.jpeg"
+    }
+  ]

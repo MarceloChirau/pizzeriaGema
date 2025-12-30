@@ -1,3 +1,5 @@
+const https=require('https');
+const fs=require('fs');
 const mongoose=require('mongoose');
 const dotenv=require('dotenv');
 dotenv.config({path:'./.env'});
@@ -5,19 +7,28 @@ const app=require('./app');
 
 
 
-const DB=process.env.DATABASE.replace('<db_password>', process.env.DATABASE_PASSWORD);
+const DB=process.env.DATABASE;
 mongoose.connect(DB).then(()=>{
     console.log('DB connection succesful!');
 })
 
 
 
-
+const options={
+    key:fs.readFileSync('./localhost-key.pem'),
+    cert:fs.readFileSync('./localhost.pem')
+}
 
 
 
 
 const port=process.env.PORT || 3000;
-app.listen(port,()=>{
+
+https.createServer(options,app).listen(port,'0.0.0.0',()=>{
     console.log(`App is running on port ...${port}`);
+
 })
+
+// app.listen(port,()=>{
+//     console.log(`App is running on port ...${port}`);
+// })

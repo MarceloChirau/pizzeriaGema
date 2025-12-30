@@ -1,22 +1,29 @@
 const express=require('express');
 const cors=require('cors');
+const helmet=require('helmet');
+const rateLimit=require('express-rate-limit');
+
+const hpp=require('hpp');
+
+const pizzaRouter=require('./routes');
 const app=express();
 
+
+app.use(helmet());
 app.use(cors());
-app.use(express.json());
+const limiter=rateLimit({
+    windowMs:15*60*1000, //15 minutes
+    max:100 //limit each api to 100 requests per window
+});
+app.use(limiter);
+app.use(express.json({limit:'20kb'})); // i can adjust this  according to my needs of how musch data i can receive
+
+app.use(hpp());
+
+app.use('/gema',pizzaRouter);
 app.use(express.static(`${__dirname}/public`));
 
 
-//here we use the routes:
-// We will create these next! 
-// app.use('/api/v1/pizzas', pizzaRouter);
 
 
-//base route:
-app.get('/',(req,res)=>{
-    res.status(200).json({
-        status:'success',
-        message:'Welcome to Pizzeria Gema!'
-    })
-})
 module.exports=app;
