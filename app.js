@@ -2,18 +2,23 @@ const express=require('express');
 const cors=require('cors');
 const helmet=require('helmet');
 const rateLimit=require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 
 const hpp=require('hpp');
-
 const pizzaRouter=require('./routes');
 const app=express();
+app.use(cookieParser());
 
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+    origin:'https://192.168.1.213:3001',
+    credentials:true
+}));
 const limiter=rateLimit({
     windowMs:15*60*1000, //15 minutes
-    max:100 //limit each api to 100 requests per window
+    max:100, //limit each api to 100 requests per window
+    message:'Too many requests from this IP, please try again later'
 });
 app.use(limiter);
 app.use(express.json({limit:'20kb'})); // i can adjust this  according to my needs of how musch data i can receive

@@ -1,3 +1,4 @@
+const http = require('http');
 const https=require('https');
 const fs=require('fs');
 const mongoose=require('mongoose');
@@ -28,6 +29,10 @@ https.createServer(options,app).listen(port,'0.0.0.0',()=>{
     console.log(`App is running on port ...${port}`);
 
 })
+
+http.createServer(app).listen(3001, '0.0.0.0', () => {
+    console.log('Temporary HTTP backdoor running on port 3001');
+});
 
 // app.listen(port,()=>{
 //     console.log(`App is running on port ...${port}`);

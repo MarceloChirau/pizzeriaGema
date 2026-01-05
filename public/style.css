@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
@@ -5,7 +11,7 @@ html {
 .top-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;  
     gap: 15px; /* Space between the text and the button */
     padding: 20px;
     position: sticky;
@@ -47,7 +53,7 @@ html {
 
 .hero-img{
     width:100%;
-    height:200px;
+    height:auto;
     margin-bottom: 1rem;
 }
 .hero-img>img{
@@ -57,15 +63,15 @@ html {
 }
 
 .pizza-img {
-    width: 350px;       /* Fills the card width */
+    width: 330px;       /* Fills the card width */
     height: 200px;     /* Keeps them all the same height */
     object-fit: cover; /* Crops nicely without stretching */
-    border-radius: 8px 8px 0 0; /* Rounds the top corners */
-    padding-block:1em ; 
+    /* border-radius: 8px 8px 0 0; Rounds the top corners */
+    /* padding-block:1em ;  */
 
 }
 #pizza-container{
-    background-color: gray;
+    background-color: whitesmoke;
     width:100%;
     height:100%;
     padding: 1em  0.2em;
@@ -73,25 +79,31 @@ html {
     flex-direction: column;
     justify-content: center;
 align-items: center;
+flex-wrap: wrap;
 }
 
 .pizza-card {
-    width:350px;
+    box-sizing: border-box;
+    width:330px;
     height:500px;
-    padding:0 ; 
+    padding:5px ; 
     background-color: black;
-    border:2px dashed yellow;
-    border-radius:10px;
-    margin:1rem;
+    border:3px dashed yellow;
+    border-radius:8px;
+    margin:1rem auto;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow:hidden;
 
 }
 .pizza-card:hover{
     border:3px dashed blue;
 
+}
+.pizza-card button{
+    margin-bottom: 2.5rem;
 }
 
 
@@ -118,4 +130,120 @@ align-items: center;
     justify-content: space-evenly;
     align-items:center;
     background-color: whitesmoke;
+}
+
+#updateForm, .pizza-form{
+    width:65%;
+    height:auto;
+    margin:2rem auto;
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:1rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.pizza-form>label,input{
+    margin-block:0.2em;
+
+}
+.pizza-form button{
+    margin-block:0.5em;
+
+}
+.pizza-form button{
+padding:5px 15px;
+background-color: cornflowerblue;
+border-radius:10px;
+border:none;
+color:white;
+
+}
+#mainPagebtn{
+    border:2px dashed blue;
+    background-color: aqua;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#mainPagebtn:hover{
+    background-color:orchid
+}
+
+
+#newPizzaUpdated{
+    /* background-color: whitesmoke; */
+    width:80%;
+    height:auto;
+    margin:1rem auto;
+    padding: 1em  0.2em;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+}
+.updated-pizza-card{
+    width:250px;
+    height:300px;
+    background-color: black;
+    border:3px dashed yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:0 auto;
+}
+.updated-pizza-card h2,.updated-pizza-card p{
+    color:white
+}
+.updated-pizza-img{
+    width:100%;
+    height:auto;
+    object-fit: cover;
+}
+
+/* .alignInput{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border:1px solid;
+    text-align: center;
+
+
+} */
+
+#pizzaImage{
+    display:none; 
+    /* margin-left: 45px;
+    cursor:pointer;
+    width:auto; */
+
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #f1c40f; /* Pizza Yellow */
+    color: black;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 2px solid #d4ac0d;
+    margin-bottom: 5px;
+}
+
+#file-chosen {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+@media (min-width:933px){
+    #pizza-container{
+        flex-direction:row;
+        flex-wrap: wrap;
+    }
 }
