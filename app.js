@@ -22,8 +22,11 @@ const limiter=rateLimit({
 });
 app.use(limiter);
 app.use(express.json({limit:'20kb'})); // i can adjust this  according to my needs of how musch data i can receive
+app.get('/health', (req, res) => res.status(200).send('OK'));
+
 
 app.use(hpp());
+
 
 app.use('/gema',pizzaRouter);
 app.use(express.static(`${__dirname}/public`));

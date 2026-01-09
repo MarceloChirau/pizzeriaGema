@@ -1,0 +1,57 @@
+[
+      {
+        "item": "JAJE",
+        "unit": "komad",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "MASLINE",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "VRHNJE",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "FEFERONI",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "PRŠUT",
+        "unit": "porcija",
+        "price": 2.50,
+        "currency": "EUR"
+      },
+      {
+        "item": "RIKOLA",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "CHERRY RAJČICA",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "UMAK",
+        "unit": "porcija",
+        "price": 1.00,
+        "currency": "EUR"
+      },
+      {
+        "item": "MOZZARELLA",
+        "unit": "porcija",
+        "price": 2.00,
+        "currency": "EUR"
+      }
+    
+]

@@ -38,5 +38,28 @@ const pizzaSchema=new mongoose.Schema({
 
 });
 
+const extraIngredientShema=new mongoose.Schema({
+    item:{
+        type:String,
+        unique:true,
+        required:[true,'Every ingredient should have a name'],
+        trim:true
+    },
+    unit:{
+       type:String,
+default:'porcija'},
+
+price:{
+    type:Number,
+    required:[true,'Every extra ingredient should have a price'],
+    default:1
+},
+currency:{
+    type:String,
+    default:'EUR'
+}
+})
+
 const Pizza=mongoose.model('Pizza',pizzaSchema);
-module.exports=Pizza;
+const ExtraIngredient=mongoose.model('ExtraIngredient',extraIngredientShema);
+module.exports={Pizza,ExtraIngredient};

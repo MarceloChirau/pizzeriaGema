@@ -8,32 +8,36 @@ const app=require('./app');
 
 
 
-const DB=process.env.DATABASE;
+const DB=process.env.ANOTHER_DATABASE;
 mongoose.connect(DB).then(()=>{
     console.log('DB connection succesful!');
 })
 
 
 
-const options={
-    key:fs.readFileSync('./localhost-key.pem'),
-    cert:fs.readFileSync('./localhost.pem')
-}
+
 
 
 
 
 const port=process.env.PORT || 3000;
 
-https.createServer(options,app).listen(port,'0.0.0.0',()=>{
-    console.log(`App is running on port ...${port}`);
+if(process.env.NODE_ENV==='development'){
+    const options={
+        key:fs.readFileSync('./localhost-key.pem'),
+        cert:fs.readFileSync('./localhost.pem') 
+    }
+    https.createServer(options,app).listen(port,'0.0.0.0',()=>{
+        console.log(`Development HTTPS running on port ...${port}`);
+    
+    })
 
-})
+}else{
+    app.listen(port,()=>{
+        console.log(`Production server running on port ${port}`);
+    })
+}
 
-http.createServer(app).listen(3001, '0.0.0.0', () => {
-    console.log('Temporary HTTP backdoor running on port 3001');
-});
 
-// app.listen(port,()=>{
-//     console.log(`App is running on port ...${port}`);
-// })
+
+

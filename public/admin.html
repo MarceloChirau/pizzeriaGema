@@ -12,17 +12,16 @@
     
 </head>
 <body>
-<main>
-    <form class="pizza-form" id="pizzaToFind">
-            <h2>Find Pizza to Update</h2>
-        <label for="pizzaName">Pizza-name:</label>
-        <input type="text" id="pizzaName" autocapitalize="none">
-        <button type="submit">Find pizza to update</button>
-    </form>
+    <main>
+<form class="pizza-form" id="resetForm">
+    <h2>Reset Pizza Menu</h2>
+    <button type="submit" id="resetBtn">Reset Menu</button>
+</form>
+<form class="pizza-form" id="resetIngredientForm">
+    <h2>Reset  Extra Ingredients Menu</h2>
+    <button type="submit" id="resetIngredientBtn">Reset Ingredients</button>
+</form>
 
-    <div id="result">
-
-    </div>
 
     <form class="pizza-form" id="createPizza" enctype="multipart/form-data">
         <h2>Create new Pizza</h2>
@@ -50,24 +49,122 @@
     <label for="pizzaImage" class="custom-file-upload">
         📁 Click to upload pizza photo
     </label>
-    <span id="file-chosen">No file selected</span>
+    <span id="file-chosen">Please upload a pizza picture</span>
 </div>
         
 
         <button type="submit">Create new Pizza</button>
     </form>
 
+    <div id="result">
+    </div>
+
+    <form class="pizza-form" id="pizzaToFind">
+            <h2>Find Pizza to Update</h2>
+
+            <div class="form-container">
+                <label for="pizzaName">Pizza-name:</label>
+                <input type="text" id="pizzaName" autocapitalize="none">
+                <small id="foundPizza"></small>
+            </div>
+
+
+        <div class='form-container'>
+                 <label for="updatedPizzaName" id="updatedPizzaNameLabel" >Editing </label>
+                     <input type="text" id="updatedPizzaName" placeholder="new pizza name" autocapitalize="none">
+              </div>
+                        
+            
+                   <div class='form-container'>
+              <label for="smallPrice" id="smallPriceLabel" >Current Price for small pizza: </label>
+                  <input type="number" id="smallPrice" step="any"  placeholder="new price for small pizza" >
+              </div>
+                        
+            
+            
+                         <div class='form-container'>
+                    <label for="largePrice"  id="largePriceLabel">Current Price for large pizza: </label>
+                        <input type="number" id="largePrice" step="any"   placeholder="new price for large pizza">
+                  </div>
+                        
+            
+            
+                         <div class='form-container'>
+                    <label for="ingredients" id="ingredientsLabel" >Current Ingredients:</label>
+                        <textarea type="text" id="ingredientsTextArea" placeholder="new ingredients" autocapitalize="none"></textarea>
+                    </div>
+                        
+                        <button type="submit" id="update-btn" disabled>Update Pizza</button>
+                        <button type='button' id='cancelBtn' >Cancel</button>
+
+    </form>
+ 
+   
+    <!-- <div id="newPizzaUpdated">
+        
+    </div> -->
+
+
 <form class="pizza-form" id="deletePizza">
     <h2>Find Pizza to Delete</h2>
     <label for="deletePizzaName">Pizza-name:</label>
     <input type="text" id="deletePizzaName" autocapitalize="none">
-    <button type="submit">Find pizza to delete</button>
+    <small id="deleteMsg"></small>
+    <button type="submit" id="deleteBtn" disabled>Delete Pizza</button>
 </form>
     
 
-    <div id="newPizzaUpdated">
-        
-    </div>
+<form class="pizza-form" id="createIngredientForm">
+    <h2>Create Ingredient</h2>
+    <label for="createIngredient"> Ingredient:</label>
+    <input type="text" id="createIngredient" autocapitalize="none" placeholder="MASLINE.." required >
+
+    <label for="createUnit">Unit:</label>
+    <input type="text" id="createUnit" placeholder="porcija.." autocapitalize="none">
+
+    <label for="createPrice" >Price:</label>
+    <input type="number" id="createPrice" required>
+    
+    <button type="submit" id="createIngredientBtn" >Create Ingredient</button>
+</form>
+
+<form class="pizza-form" id="findIngredientForm">
+<h2>Find Ingredient to Update </h2>
+
+<label for="findIngredient">Ingredient to Update:</label>
+<input type="text" id="findIngredient" placeholder="Masline..." autocapitalize="none">
+<small id="inputMessage"></small>
+
+<label for="newIngredient" id="labelIngredient">Change Ingredient to:</label>
+<input id="newIngredient" type="text" autocapitalize="none" >
+
+<label for="unit">Unit:</label>
+<input id="unit" type="text" placeholder="porcija.." autocapitalize="none" >
+
+<label for="price">Price:</label>
+<input type="number" step="any" id="price" placeholder="1.00€" required>
+
+<button id="updateIngredientBtn" type="submit" disabled>Update Ingredient</button>
+</form>
+
+<div id="updateIngredientResult">
+</div>
+
+<form class="pizza-form" id="ingredientToDeleteForm">
+    <h2>Find Ingredient to Delete</h2>
+
+<label for="ingredientToDelete">Ingredient to Delete:</label>
+<input id="ingredientToDelete" type="text" placeholder="Masline.." autocapitalize="none">
+<small id="ingredientToDeleteMsg"></small>
+
+<button type="submit" id="deleteIngredientBtn" disabled>Delete Ingredient</button>
+
+</form>
+
+
+
+
+  
 </main>
     
   

@@ -2,9 +2,20 @@ const express=require('express');
 const router=express.Router();
 const path = require('path');
 const multer=require('multer');
-
-
-const {importAllPizzas,showAllPizzas,bossLogIn,protectAdmin,findPizza,updatePizza,createPizza,deletePizza}=require('./controllers.js');
+const {importAllPizzas,
+    showAllPizzas,
+    bossLogIn,
+    protectAdmin,
+    findPizza,
+    updatePizza,
+    createPizza,
+    deletePizza,
+    showAllIngredients,
+    importAllExtraIngredients,
+    findIngredient,
+    updateIngredient,
+    findIngredientToDelete,
+    createIngredient}=require('./controllers.js');
 
 const storage=multer.diskStorage({
     destination:(req,file,cb)=>{  // args not random but provided by multer: req=standard expr.request,file=obj that contains
@@ -18,11 +29,32 @@ const storage=multer.diskStorage({
 const upload=multer({storage:storage});
 
 
+
+
 router
-.post('/import',importAllPizzas);
+.post('/import',importAllPizzas);  //dont realy need this route
+
+router
+.post('/importAllIngredients',importAllExtraIngredients)
+
+router
+.get('/findIngredient',protectAdmin,findIngredient)
+ 
+router
+.patch('/updateIngredient',protectAdmin,updateIngredient)
+
+router
+.get('/showAllIngredients',showAllIngredients)
+
+router
+.delete('/findIngredientToDelete',protectAdmin,findIngredientToDelete);
+
+router
+.post('/createIngredient',protectAdmin,createIngredient)
 
 router
 .get('/showPizzas',showAllPizzas);
+
 
 router
 .get('/menu',(req,res)=>{
@@ -52,6 +84,8 @@ router
 
 router
 .delete('/deletePizza', protectAdmin,deletePizza);
+
+
 
 module.exports=router;
 

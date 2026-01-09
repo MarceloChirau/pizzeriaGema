@@ -1,5 +1,6 @@
 const pizzaContainer=document.getElementById('pizza-container');
 document.getElementById("year").innerHTML = new Date().getFullYear();
+const extraIngredientContainer=document.querySelector('#extraIngredient-container');
 
 const displayPizzas=async()=>{
     try{
@@ -39,3 +40,36 @@ pizzaContainer.insertAdjacentHTML('beforeend',html);
     }
 }
 displayPizzas();
+
+const displayExtraIngredients=async()=>{
+    try{
+const response=await fetch('/gema/showAllIngredients')
+const result=await response.json();
+if(!response.ok){
+    throw new Error('Couldnt display any ingredient')
+}   
+console.log('this is the result:',result.data)
+const ingredients=result.data;
+
+
+
+ingredients.forEach(ingredient=>{
+    const html=`<div class='ingredient'>
+    <h3>${ingredient.item}(${ingredient.unit}):${ingredient.price.toFixed(2)}€</h3>
+    
+    </div>`
+    extraIngredientContainer.insertAdjacentHTML('beforeend',html)
+
+})
+
+
+
+
+
+
+    }
+    catch(err){
+        console.log('Error:',err.message)
+    }
+}
+displayExtraIngredients();

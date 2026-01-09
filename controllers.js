@@ -1,8 +1,55 @@
-const Pizza=require('./models');
+const {Pizza,ExtraIngredient}=require('./models');
+
+
 const fs=require('fs');
 const pizzaData=JSON.parse(fs.readFileSync(`${__dirname}/data.json`,'utf-8'));
+const extraData=JSON.parse(fs.readFileSync(`${__dirname}/extra.json`,'utf-8'));
 const crypto=require('crypto');
 const jwt=require('jsonwebtoken');
+
+
+exports.importAllExtraIngredients=async(req,res)=>{
+    try{
+await ExtraIngredient.deleteMany();
+const extraIngredients=await ExtraIngredient.create(extraData);
+if(!extraIngredients){
+  return  res.status(422).json({status:'fail',message:'The data is  invalid'})
+}
+return res.status(201).json({result:extraIngredients.length,status:'success',data:extraIngredients})
+
+
+    }
+    catch(err){
+        console.log("💥 ERROR:", err);
+        res.status(400).json({
+            status:'fail',
+            message:err.message
+    })
+}
+}
+
+exports.showAllIngredients=async(req,res,next)=>{
+    try{
+const extraIngredients=await ExtraIngredient.find();
+// console.log('this is the extraIngredients',extraIngredients)
+if(!extraIngredients){
+    return res.status(404).json({status:'fail',message:'Couldnt find any extra ingredients'})
+}
+res.status(200).json({status:'success',data:extraIngredients})
+
+    }
+    catch(err){
+        console.log('there is an error:',err)
+        res.status(404).json({
+            status:'fail',
+            message:err.message
+    })
+}
+}
+
+
+
+
 
 
 exports.importAllPizzas=async(req,res,next)=>{
@@ -31,6 +78,9 @@ exports.importAllPizzas=async(req,res,next)=>{
 
 exports.showAllPizzas=async(req,res)=>{
     try{
+
+
+
 const pizzas=await Pizza.find();
 if(!pizzas){
     throw new Error('There is no pizzas to show');
@@ -67,27 +117,25 @@ try{
         const token=jwt.sign(payload,process.env.SECRET_JWT,{expiresIn:'7d'});
         res.cookie('admin_token',token,{
             httpOnly:true,
-            secure:false,  //process.env.NODE_ENV==='production'
-            sameSite:'lax',  //'Strict'
+            secure:process.env.NODE_ENV==='production',  
+            sameSite:'Lax',  //or 'Strict'
             maxAge:7*24*60*60*1000
         });
-        next();
+        // next();
     //    return res.json({message:'Logged in!'})
        return res.redirect('/gema/admin/dashboard');
 }
 else{
-    throw new Error('Not found')
-    // res.status(404).json({
-    //     status:'fail',
-    //     message:"Not found"
-    // })
+    return res.redirect('/gema/menu');
+    // throw new Error('Boss doesnt have the token');
 }
 }catch(err){
-    console.log(err.message)
-    res.status(400).json({
-        status:'fail',
-        message:err.message
-    })
+    console.log(err.message);
+    return res.redirect('/gema/menu');
+    // res.status(400).json({
+    //     status:'fail',
+    //     message:err.message
+    // })
 }
 
 }
@@ -122,14 +170,119 @@ exports.protectAdmin =async (req, res, next) => {
 };
 
 
+exports.findIngredient=async(req,res)=>{
+    try{
+        // console.log('this is the req.body:',req.body)
+        const{item}=req.query;
+        // console.log('Item:',item);
+        // console.log('req.params:',req.params)
+        // console.log('req.query:',req.query)
+
+const ingredient=await ExtraIngredient.findOne({item:item})
+// console.log('and this is the ingredientFound: ',ingredient)
+if(!ingredient){
+  return  res.status(404).json({success:'fail',message:'There is no such ingredient'})
+}
+res.status(200).json({
+    status:'success',
+    data:ingredient
+})
+    }
+    catch(err){
+        console.log('Couldnt find the ingredient')
+        res.status(400).json({status:'fail',message:err.message})
+    }
+}
+
+exports.updateIngredient=async(req,res)=>{
+    try{
+        console.log('req.query:',req.query);
+        const {item}=req.query;
+        const{dataToUpdate}=req.body;
+        console.log('req.body: ',req.body)
+const ingredientUpdated=await ExtraIngredient.findOneAndUpdate({item:item.toUpperCase()},dataToUpdate,{new:true,runValidators:true})
+console.log('The ingredientUpdated :',ingredientUpdated);
+if(!ingredientUpdated){
+    throw new Error('Couldnt update any ingredient')
+}
+res.status(200).json({
+    status:'success',
+    data:ingredientUpdated
+})
+    }
+    catch(err){
+        res.status(404).json({status:'fail',message:err.message})
+    }
+}
+
+
+exports.findIngredientToDelete=async(req,res)=>{
+    try{
+console.log('req.query:',req.query)
+const {item}=req.query;
+if(!item){
+    throw new Error('Please provide an ingredient name')
+}
+
+
+const deletedIngredient=await ExtraIngredient.findOneAndDelete({item:item.toUpperCase()})
+if(!deletedIngredient){
+    throw new Error('There is no ingredient to delete')
+}
+
+res.status(200).json({
+    status:'success',
+    message:'Ingredient Succesfuly deleted',
+    data:deletedIngredient
+})
+    }
+    catch(err){
+        res.status(400).json({
+            status:'fail',
+            message:err.message
+        })
+    }
+}
+
+
+exports.createIngredient=async(req,res)=>{
+    try{
+        const{dataToUse}=req.body;
+        console.log('req.body:',req.body);
+        console.log('dataToUse:',dataToUse)
+if(!dataToUse){
+    res.status(404).json({status:'fail',message:'Please provide data to create new Ingredient'})
+}
+
+const newIngredient= await ExtraIngredient.create({item:dataToUse.item,unit:dataToUse.unit,price:dataToUse.price});
+console.log('newIngredient:',newIngredient)
+if(!newIngredient){
+   return res.status(400).json({status:'fail',message:'Couldnt create new Ingredient!'})
+}else{
+ return res.status(201).json({status:'success',data: newIngredient})
+}
+
+    }
+    catch(err){
+        res.status(400).json({
+            status:'fail',
+            message:err.message
+        })
+    }
+}
+
 
 exports.findPizza=async (req,res)=>{
     try{
+        console.log('req.query:',req.query);
 const pizza=await Pizza.findOne({name:req.query.name})
-if(!pizza)throw new Error('There is no pizza with this name')
+if(!pizza){
+   return res.status(404).json({status:'fail',message:'There is no pizza with this name'})
+}else{
     res.status(200).json({
 status:'success',
 data:pizza})
+}
     }
     catch(err){
         console.log('couldnt find the pizza:',err.message)
@@ -143,8 +296,12 @@ data:pizza})
 exports.updatePizza=async(req,res)=>{
     try{
         // console.log("the req.body:",req.body);
-        const{id,name,prices,ingredients}=req.body;
-        const updatedPizza=await Pizza.findByIdAndUpdate(id,{name:name,prices:{small:prices.small,large:prices.large},ingredients:ingredients},{new:true,runValidators:true})
+        const{updateData,id}=req.body;
+        console.log('updateData:',updateData);
+        if(!updateData){
+            return res.status(400).json({status:'fail',message:'Please provide data to update the pizza'})
+        }
+        const updatedPizza=await Pizza.findByIdAndUpdate({_id:id},{name:updateData.name,prices:{small:updateData.prices.small,large:updateData.prices.large},ingredients:updateData.ingredients},{new:true,runValidators:true})
         if(!updatedPizza){return res.status(404).json({status:'fail',message:'pizza not found'})}
 res.status(200).json({status:'success',data:updatedPizza})
     }
@@ -172,23 +329,26 @@ exports.createPizza=async(req,res)=>{
     }
     catch(err){
         console.log('This error comes from uploading new pizza',err.message)
-res.status(201).json({status:'fail',message:err.message})
+res.status(400).json({status:'fail',message:err.message})
     }
 }
 exports.deletePizza=async(req,res)=>{
     try{
-        
-const pizzaToDelete=await Pizza.findByIdAndDelete(req.body._id);
-if(pizzaToDelete){
+        const {dataBackup}=req.body;
+        if(!dataBackup){
+            return res.status(400).json({status:'fail',message:'Please provide dataBackup'})
+        }
+        const id=dataBackup._id;
+
+const pizzaToDelete=await Pizza.findByIdAndDelete({_id:id});
+if(!pizzaToDelete){
+    return res.status(400).json({status:'fail',message:'Couldnt find this pizza!'})
+}else{
     res.status(200).json({
         status:'success',
         message:'Pizza deleted successfully!'
     })
-}else{
-    res.status(404).json({status:'fail',message:"Pizza id is not found"})
-    // throw new Error('The deleteis unsuccesfull!')
 }
-
 
     }
     catch(err){

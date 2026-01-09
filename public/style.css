@@ -130,6 +130,10 @@ flex-wrap: wrap;
     justify-content: space-evenly;
     align-items:center;
     background-color: whitesmoke;
+    padding:1rem ;
+}
+.form-container{
+    padding:0.5em;
 }
 
 #updateForm, .pizza-form{
@@ -205,16 +209,7 @@ flex-wrap: wrap;
     object-fit: cover;
 }
 
-/* .alignInput{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border:1px solid;
-    text-align: center;
 
-
-} */
 
 #pizzaImage{
     display:none; 
@@ -241,6 +236,74 @@ flex-wrap: wrap;
     color: #666;
     font-style: italic;
 }
+#extraIngredient-container{
+    width:90%;
+    border:2px solid;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: black;
+    margin:1rem auto;
+    padding:20px;
+}
+#extraIngredient-container h2{
+    color:yellow;
+    font-size:1.8em;
+}
+.ingredient{
+    color:white;
+    padding:5px;
+
+}
+#updateIngredientBtn:hover,
+#update-btn:hover,
+#cancelBtn:hover,
+#deleteBtn:hover,
+#resetBtn:hover,
+#resetIngredientBtn:hover,
+#deleteIngredientBtn:hover
+{
+    cursor: pointer;
+
+}
+#updateIngredientBtn:disabled,
+#update-btn:disabled,
+#deleteBtn:disabled,
+#deleteIngredientBtn:disabled{
+    cursor:not-allowed;
+    opacity:0.6
+}
+.shake{
+    animation: shake 0.3s ease-in-out;
+    border: 2px solid #ff4d4d !important; /* Έντονο κόκκινο */
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.2);
+}
+
+.updatedIngredient{
+    width:60%;
+    border:2px solid;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: black;
+    margin:1rem auto;
+    padding:20px;
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-8px);}
+    50%{transform:translateX(8px);}
+    75%{transform:translateX(-8px);}
+
+
+
+}
+
 @media (min-width:933px){
     #pizza-container{
         flex-direction:row;
