@@ -203,7 +203,7 @@ color:white;
     background-color: aqua;
     border-radius: 10px;
     cursor: pointer;
-padding:5px 15px;
+padding:3px 6px;
 margin-block:5px;
 }
 #mainPagebtn:hover{
@@ -233,6 +233,7 @@ flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin:0 auto;
+    padding:5px auto;
 }
 .updated-pizza-card h2,.updated-pizza-card p{
     color:white
