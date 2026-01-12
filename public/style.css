@@ -16,11 +16,18 @@ html {
     padding: 20px;
     position: sticky;
     top:0;
-    background-color: white;
+    z-index:1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    backdrop-filter: blur(15px); /* This blurs the pizza images behind the header */
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
 }
 .brand-link{
     text-decoration: none;
-    color:black;
+    color:white;
 
 }
 .brand-link:hover{
@@ -48,7 +55,7 @@ html {
 }
 .phone-number{
     text-decoration: none;
-    color:black;
+    color:white;
 }
 
 .hero-img{
@@ -63,11 +70,10 @@ html {
 }
 
 .pizza-img {
-    width: 330px;       /* Fills the card width */
-    height: 200px;     /* Keeps them all the same height */
-    object-fit: cover; /* Crops nicely without stretching */
-    /* border-radius: 8px 8px 0 0; Rounds the top corners */
-    /* padding-block:1em ;  */
+    width: 330px;       
+    height: 200px;     
+    object-fit: cover; 
+    transition: transform 0.3s ease;
 
 }
 #pizza-container{
@@ -80,7 +86,15 @@ html {
     justify-content: center;
 align-items: center;
 flex-wrap: wrap;
+
 }
+
+
+
+
+
+
+
 
 .pizza-card {
     box-sizing: border-box;
@@ -98,10 +112,26 @@ flex-wrap: wrap;
     overflow:hidden;
 
 }
-.pizza-card:hover{
-    border:3px dashed blue;
+
+
+                    
+
+/* .pizza-card:first-child:hover{
+    transform: scale(1.05) rotate(2deg)!important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+} */
+
+.pizza-card:hover {
+    border:5px dashed orange;
+    transform: scale(1.05) rotate(2deg)!important;
 
 }
+
+.pizza-card:nth-child(even):hover {
+    /* Tilt left slightly on hover */
+    transform: scale(1.05) rotate(-2deg)!important;
+}
+
 .pizza-card button{
     margin-bottom: 2.5rem;
 }
@@ -245,6 +275,8 @@ flex-wrap: wrap;
     align-items: center;
     border-radius: 10px;
     background-color: black;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(35px);
     margin:1rem auto;
     padding:20px;
 }
@@ -303,6 +335,9 @@ flex-wrap: wrap;
 
 
 }
+
+
+
 
 @media (min-width:933px){
     #pizza-container{

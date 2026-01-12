@@ -58,28 +58,31 @@ const deleteBtn=document.querySelector('#deleteBtn');
 resetPizzaMenuForm.addEventListener('submit',async(e)=>{
     try{
         e.preventDefault();
-const response=await fetch('/gema/import',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({})
-});
-const result=await response.json();
+const confirmed=confirm('Are you sure you want to reset the menu to initial state? This cannot be undone.')
+if(confirmed){
+    const response=await fetch('/gema/import',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({})
+    });
+    const result=await response.json();
+    
+    if(!response.ok){
+        alert('SERVER ERROR:',result.message);
+    }else{
+        alert('Pizza menu is reset successfully!!!😋')
+    }
+    
+        }
 
-if(!response.ok){
-    alert('SERVER ERROR:',result.message);
-}else{
-    alert('Pizza menu is reset successfully!!!😋')
+    
+}catch(err){
+    alert('NETWORK ERROR:',err.message)
 }
 
-    }catch(err){
-        alert('NETWORK ERROR:',err.message)
-    }
 
 
 })
-
-
-
 
 
 ///////////////////////////////////
@@ -87,18 +90,23 @@ if(!response.ok){
 resetIngredientForm.addEventListener('submit',async(e)=>{
     try{
         e.preventDefault();
-const response=await fetch('/gema/importAllIngredients',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({})
-});
-const result=await response.json();
+        const confirmed=confirm('Are you sure you want to reset the extra ingredients into the initial state? This cannot be undone.')
+        if(confirmed){
+            const response=await fetch('/gema/importAllIngredients',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({})
+            });
+            const result=await response.json();
+            
+            if(!response.ok){
+                alert('SERVER ERROR:',result.message);
+            }else{
+                alert('Extra Ingredients are reset successfully!!!😋')
+            }
 
-if(!response.ok){
-    alert('SERVER ERROR:',result.message);
-}else{
-    alert('Extra Ingredients are reset successfully!!!😋')
-}
+        }
+
 
     }catch(err){
         alert('NETWORK ERROR:',err.message)
@@ -106,18 +114,6 @@ if(!response.ok){
 
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ////////////////////////////////////////
@@ -172,85 +168,39 @@ deleteBtn.disabled=false;
 
 deletePizzaForm.addEventListener('submit',async(e)=>{
     e.preventDefault();
+const confirmed=confirm('Are you sure you want to delete this pizza?This cannot be undone.')
+if(confirmed){
     const response=await fetch('/gema/deletePizza',{
-            method:"DELETE",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({dataBackup})
-        
-     })
+        method:"DELETE",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({dataBackup})
+    
+ })
 
-     const result=await response.json();
+ const result=await response.json();
 
-     if(!response.ok){
-        alert('SERVER ERROR: ',result.message)
-     }else{
-        deleteBtn.disabled=true;
-        deleteMsg.textContent='';
-        deleteMsg.style.color='';
-        pizzaNameDeleteInput.value='';
-        pizzaNameDeleteInput.style.color='';
+ if(!response.ok){
+    alert('SERVER ERROR: ',result.message)
+ }else{
+    deleteBtn.disabled=true;
+    deleteMsg.textContent='';
+    deleteMsg.style.color='';
+    pizzaNameDeleteInput.value='';
+    pizzaNameDeleteInput.style.color='';
 pizzaNameDeleteInput.classList.remove('shake');
 
 
-        alert(`Pizza successfuly deleted!`);
+    alert(`Pizza successfuly deleted!`);
 
 
-     }
+ }
+
+}
+    
 
 
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-// deletePizzaForm.addEventListener('submit',async (e)=>{
-//     e.preventDefault();
-//     const pizzaNameInput=document.querySelector('#deletePizzaName');
-//     const pizzaName=pizzaNameInput.value;
-
-//     const response=await fetch(`/gema/findPizza?name=${pizzaName}`,{
-//         method:"GET",
-//         headers:{'Content-Type':'application/json'}
-//     })
-
-// const result=await response.json();
-// if(response.ok){
-//     // alert('Pizza is found and ready for delete!')
-//     const pizzaId=result.data._id
-
-// const responseDelete=await fetch('/gema/deletePizza',{
-//     method:"DELETE",
-//     headers:{'Content-Type':'application/json'},
-//     body:JSON.stringify({_id:pizzaId})
-
-// })
-
-// const resultDelete=await responseDelete.json();
-// if(responseDelete.ok){
-//     pizzaNameInput.value='';
-
-//     alert('The pizza is deleted!')
-// }else{
-//     const errorData=await responseDelete.json();
-//     alert("Error: ",errorData.message)
-// }
-
-
-// }else{
-//     alert(`Couldnt find ${pizzaNameInput.value}`);
-//     pizzaNameInput.value='';
-// }
-
-// })
 
 
 let backupData3=null;
@@ -420,7 +370,7 @@ let backupData=null;
 findIngredientInput.addEventListener('input', ()=>{
 clearTimeout(debouncer);
 
-const ingredient=findIngredientInput.value.trim().toUpperCase();
+const ingredient=findIngredientInput.value.trim();
 
 if(!ingredient){
     inputMessage.textContent='';
@@ -580,6 +530,8 @@ try{
 
 ingredientToDeleteForm.addEventListener('submit',async(e)=>{
     e.preventDefault();
+const confirmed=confirm('Are you sure you want to delete this ingredient?This cannot be undone.');
+if(confirmed){
     try{ 
         const response=await fetch(`/gema/findIngredientToDelete/?item=${backupData2.item.toUpperCase()}`,{
         method:'DELETE',
@@ -601,6 +553,11 @@ ingredientToDeleteForm.addEventListener('submit',async(e)=>{
 }catch(err){
     console.log('Network Error: ',err.message)
 }
+
+
+}
+
+   
    
 })
 

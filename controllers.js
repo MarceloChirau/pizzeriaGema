@@ -178,7 +178,7 @@ exports.findIngredient=async(req,res)=>{
         // console.log('req.params:',req.params)
         // console.log('req.query:',req.query)
 
-const ingredient=await ExtraIngredient.findOne({item:item})
+const ingredient=await ExtraIngredient.findOne({item:{$regex:"^"+item+"$",$options:"i"}})
 // console.log('and this is the ingredientFound: ',ingredient)
 if(!ingredient){
   return  res.status(404).json({success:'fail',message:'There is no such ingredient'})
@@ -275,7 +275,8 @@ if(!newIngredient){
 exports.findPizza=async (req,res)=>{
     try{
         console.log('req.query:',req.query);
-const pizza=await Pizza.findOne({name:req.query.name})
+        const name=req.query.name;
+const pizza=await Pizza.findOne({name:{$regex:"^"+name+"$",$options:"i"}})
 if(!pizza){
    return res.status(404).json({status:'fail',message:'There is no pizza with this name'})
 }else{
@@ -334,6 +335,8 @@ res.status(400).json({status:'fail',message:err.message})
 }
 exports.deletePizza=async(req,res)=>{
     try{
+
+
         const {dataBackup}=req.body;
         if(!dataBackup){
             return res.status(400).json({status:'fail',message:'Please provide dataBackup'})
