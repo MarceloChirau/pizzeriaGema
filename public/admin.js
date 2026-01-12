@@ -350,8 +350,8 @@ fileChosen.textContent='';
         <div class="updated-pizza-card">
 <img class="updated-pizza-img" src='/img/${result.data.image}' alt='${result.data.name}'>
 <h2>${result.data.name }</h2>
-<p>Small price:${result.data.prices.small}</p>
-<p>Large price:${result.data.prices.large}</p>
+<p>Mala:${result.data.prices.small}</p>
+<p>Velika:${result.data.prices.large}</p>
 <p>Ingredients:${result.data.ingredients.join(',')}</p>
 <a href='/gema/menu'>
     <button id='mainPagebtn'  type='button'>Take me to main page</button>
