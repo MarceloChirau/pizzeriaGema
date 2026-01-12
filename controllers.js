@@ -117,8 +117,8 @@ try{
         const token=jwt.sign(payload,process.env.SECRET_JWT,{expiresIn:'7d'});
         res.cookie('admin_token',token,{
             httpOnly:true,
-            secure:process.env.NODE_ENV==='production',  
-            sameSite:'Lax',  //or 'Strict'
+            secure:true,  
+            sameSite:'None',  //or 'Strict'
             maxAge:7*24*60*60*1000
         });
         // next();
