@@ -159,7 +159,8 @@ flex-wrap: wrap;
 }
 .footer-container{
     display:flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-items:center;
     background-color: whitesmoke;
     padding:1rem ;
