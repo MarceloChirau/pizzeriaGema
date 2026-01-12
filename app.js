@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(helmet());
 app.use(cors({
-    origin:'https://192.168.1.213:3001',
+    origin:process.env.NODE_ENV==='production'?  'https://pizzeriagema.onrender.com':'http://localhost:3000',
     credentials:true
 }));
 const limiter=rateLimit({
