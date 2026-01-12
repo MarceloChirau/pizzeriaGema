@@ -201,6 +201,8 @@ color:white;
     background-color: aqua;
     border-radius: 10px;
     cursor: pointer;
+padding:5px 15px;
+margin-block:5px;
 }
 #mainPagebtn:hover{
     background-color:orchid
