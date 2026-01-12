@@ -616,9 +616,3 @@ try{
 
 })
 
-document.querySelectorAll('*').forEach(el => {
-    if (el.offsetWidth > document.documentElement.offsetWidth) {
-        console.log('Found it! This element is too wide:', el);
-        el.style.outline = '2px solid red';
-    }
-});

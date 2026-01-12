@@ -8,11 +8,7 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
-html,body{
-    max-width:100%;
-    overflow-x:hidden;
-    position:relative;
-}
+
 
 .top-bar {
     display: flex;
