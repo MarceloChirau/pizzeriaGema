@@ -165,6 +165,12 @@ flex-wrap: wrap;
     background-color: whitesmoke;
     padding:1rem ;
 }
+.copyRight{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 .form-container{
     padding:0.5em;
 }
