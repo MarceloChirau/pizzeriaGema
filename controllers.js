@@ -114,7 +114,7 @@ try{
             site:"Pizzeria Gema",
             description:"Owner"
         };
-        const token=jwt.sign(payload,process.env.SECRET_JWT,{expiresIn:'7d'});
+        const token=jwt.sign(payload,process.env.SECRET_JWT,{expiresIn:'90d'});
         res.cookie('admin_token',token,{
             httpOnly:true,
             secure:true,  
