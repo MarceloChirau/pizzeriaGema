@@ -166,11 +166,13 @@ flex-wrap: wrap;
     padding:1rem ;
 }
 .copyRight{
+    width:100%;
     display:flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     border:1px solid;
+    padding:10px 3%;
 }
 .form-container{
     padding:0.5em;
