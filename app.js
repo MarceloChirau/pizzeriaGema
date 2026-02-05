@@ -22,13 +22,14 @@ app.use(helmet({contentSecurityPolicy: false}));
 //     credentials:true
 // }));
 
-const allowedOrigins = ['https://localhost:3000', 'https://127.0.0.1:3000', 'https://192.168.1.213:3000'];
+const allowedOrigins = ['https://localhost:3000', 'https://127.0.0.1:3000', 'https://192.168.1.213:3000','https://pizzeriagema.onrender.com'];
 
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log("Blocked by CORS:", origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -47,6 +48,8 @@ app.use(express.json({limit:'20kb'})); // i can adjust this  according to my nee
 
 app.use(hpp());
 
+
+app.set('trust proxy', 1);
 
 app.use('/gema',pizzaRouter);
 app.use('/user',userRouter);
