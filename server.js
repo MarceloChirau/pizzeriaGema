@@ -19,7 +19,7 @@ mongoose.connect(DB).then(()=>{
 
 
 
-
+console.log(process.env.NODE_ENV);
 const port=process.env.PORT || 3000;
 
 if(process.env.NODE_ENV==='development'){
