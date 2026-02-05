@@ -17,7 +17,7 @@ exports.signUp=async (req,res,next)=>{
 res.cookie('user',token,{
     httpOnly:true,
     secure:process.env.NODE_ENV==='production',
-    sameSite:process.env.NODE_ENV==="production" ? 'None' :'Lax',
+    sameSite: 'Lax',
     maxAge:60*60*1000
 })
 
@@ -48,7 +48,7 @@ exports.logIn=async(req,res,next)=>{
         res.cookie('user',token,{
             httpOnly:true,
             secure:process.env.NODE_ENV==='production',
-            sameSite: process.env.NODE_ENV==="production" ? 'None' :'Lax',
+            sameSite:'Lax',
             maxAge:60*60*1000
         })
 

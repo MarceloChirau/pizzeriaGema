@@ -12,6 +12,8 @@ const userRouter=require('./userRouter');
 const bookingRouter=require('./bookingRoutes.js');
 
 const app=express();
+app.set('trust proxy', 1);
+
 app.use(cookieParser());
 
 
@@ -49,7 +51,6 @@ app.use(express.json({limit:'20kb'})); // i can adjust this  according to my nee
 app.use(hpp());
 
 
-app.set('trust proxy', 1);
 
 app.use('/gema',pizzaRouter);
 app.use('/user',userRouter);
