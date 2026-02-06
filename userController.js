@@ -86,6 +86,7 @@ req.user=currentUser;
 next();
     }
     catch(err){
+        err.statusCode=401;
         next(err)
     }
 }
