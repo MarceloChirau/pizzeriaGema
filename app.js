@@ -15,10 +15,7 @@ const {webhookCheckout}=require('./bookingController.js')
 const app=express();
 app.set('trust proxy', 1);
 
-app.use(cookieParser());
 
-
-app.use(helmet({contentSecurityPolicy: false}));
 
 // app.use(cors({
 //     origin:process.env.NODE_ENV==='production'?  'https://pizzeriagema.onrender.com':'http://localhost:3000',
@@ -39,6 +36,13 @@ app.use(cors({
     credentials: true
 }));
 
+// In app.js (BEFORE express.json)
+app.post('/booking/webhook', express.raw({type: 'application/json'}), webhookCheckout);
+
+app.use(cookieParser());
+
+
+app.use(helmet({contentSecurityPolicy: false}));
 
 const limiter=rateLimit({
     windowMs:15*60*1000, //15 minutes
@@ -47,8 +51,7 @@ const limiter=rateLimit({
 });
 app.use(limiter);
 
-// In app.js (BEFORE express.json)
-app.post('/booking/webhook', express.raw({type: 'application/json'}), webhookCheckout);
+
 
 
 app.use(express.json({limit:'20kb'})); // i can adjust this  according to my needs of how musch data i can receive
