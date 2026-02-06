@@ -149,7 +149,11 @@ exports.showUserCart=async(req,res,next)=>{
         const userId=req.user.id;
         console.log(userId);
 const cart=await Cart.findOne({user:userId});
-if(!cart) return next(new Error('You didnt add anything to cart'));
+if(!cart) return res.status(200).json({
+    status:'success',
+    result:0,
+    data:{items:[]}
+})
 
 res.status(200).json({
     status:'success',
