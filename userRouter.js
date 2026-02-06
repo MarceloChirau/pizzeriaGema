@@ -19,7 +19,9 @@ router
 .post(logIn)
 
 //for frontend:
-router.get('/getMe', protect, (req, res) => {
+router.get('/getMe', protect, (req, res,next) => {
+if(!req.user) return next(new Error('User not found',404))
+
     res.status(200).json({
         status: 'success',
         data: { user: req.user }
