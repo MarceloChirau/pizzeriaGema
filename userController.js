@@ -17,7 +17,7 @@ exports.signUp=async (req,res,next)=>{
 res.cookie('user',token,{
     httpOnly:true,
     secure:process.env.NODE_ENV==='production',
-    sameSite: 'Lax',
+    sameSite: 'None',
     maxAge:60*60*1000
 })
 
@@ -48,7 +48,7 @@ exports.logIn=async(req,res,next)=>{
         res.cookie('user',token,{
             httpOnly:true,
             secure:process.env.NODE_ENV==='production',
-            sameSite:'Lax',
+            sameSite:'None',
             maxAge:60*60*1000
         })
 
@@ -70,7 +70,12 @@ exports.protect=async(req,res,next)=>{
             token = req.cookies.user;
         }
         if (!token) {
-            return next(new Error('You are not logged in! Please log in to get access.', 401));
+            const err = new Error('You are not logged in! Please log in to get access.');
+            err.statusCode = 401;
+            err.isOperational = true; // Add this!
+
+
+            return next(err);
         }
 
         //  token=req.cookies.user;
