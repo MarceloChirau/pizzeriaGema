@@ -13,12 +13,16 @@ const checkAuth = async () => {
         });
         const result = await response.json();
 
+         if(response.status===401)return false;
+
         if (response.ok) {
             // User is logged in! 
             // Now you can find your buttons and show them
             console.log(`Authenticated as: ${result.data.user.name}`);
             return true;
-        }else{
+        }
+        
+        else{
             return false;
         }
     } catch (err) {
