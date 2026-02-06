@@ -18,9 +18,15 @@ router
 .route('/logIn')
 .post(logIn)
 
-//for frontend:
+//for frontend: this is for the checkAuth there i will fetch it
 router.get('/getMe', protect, (req, res,next) => {
-if(!req.user) return next(new Error('User not found',404))
+if(!req.user){
+    const err = new Error('User not found');
+    err.statusCode = 404;
+    err.isOperational = true; // Prevents your Global Error Handler from crashing
+    return next(err);
+
+}
 
     res.status(200).json({
         status: 'success',
