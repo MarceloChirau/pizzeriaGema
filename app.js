@@ -10,6 +10,7 @@ const hpp=require('hpp');
 const pizzaRouter=require('./routes');
 const userRouter=require('./userRouter');
 const bookingRouter=require('./bookingRoutes.js');
+const {webhookCheckout}=require('./bookingController.js')
 
 const app=express();
 app.set('trust proxy', 1);
@@ -45,6 +46,11 @@ const limiter=rateLimit({
     message:'Too many requests from this IP, please try again later'
 });
 app.use(limiter);
+
+// In app.js (BEFORE express.json)
+app.post('/booking/webhook', express.raw({type: 'application/json'}), webhookCheckout);
+
+
 app.use(express.json({limit:'20kb'})); // i can adjust this  according to my needs of how musch data i can receive
 
 

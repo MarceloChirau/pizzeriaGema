@@ -49,3 +49,34 @@ res.status(200).json({
         next(err);
     }
 }
+
+
+exports.webhookCheckout = async (req, res) => {
+    const signature = req.headers['stripe-signature'];
+    let event;
+
+    try {
+        // Stripe verifies that this message actually came from them
+        event = stripe.webhooks.constructEvent(
+            req.body, 
+            signature, 
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (err) {
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the specific event
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+
+        // The session contains the client_reference_id (User ID)
+        // This is how we know WHOSE cart to delete!
+        await Cart.findOneAndDelete({ user: session.client_reference_id });
+        
+        console.log('Cart cleared for user:', session.client_reference_id);
+    }
+
+    // You MUST send a 200 response to Stripe so they stop retrying
+    res.status(200).json({ received: true });
+};
