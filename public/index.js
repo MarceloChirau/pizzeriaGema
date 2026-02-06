@@ -19,12 +19,10 @@ const checkAuth = async () => {
             console.log(`Authenticated as: ${result.data.user.name}`);
             return true;
         }else{
-console.log(result.message);
             return false;
         }
     } catch (err) {
         // Not logged in, keep buttons hidden
-        console.log(err.message)
         return false;
     }
 };
