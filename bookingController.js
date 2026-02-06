@@ -53,6 +53,13 @@ res.status(200).json({
 
 exports.webhookCheckout = async (req, res) => {
     const signature = req.headers['stripe-signature'];
+
+// DEBUG LOGS (Check these in Render)
+console.log('--- Webhook Attempt ---');
+console.log('Signature Header Exists:', !!signature);
+console.log('Body Type:', typeof req.body); 
+// It should be 'object' (a Buffer), not 'string' or 'undefined'
+
     let event;
 
     try {
@@ -63,13 +70,14 @@ exports.webhookCheckout = async (req, res) => {
             process.env.STRIPE_WEBHOOK_SECRET
         );
     } catch (err) {
+        console.log(`❌ Webhook Error: ${err.message}`);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     // Handle the specific event
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
-
+        console.log('✅ Payment successful for user:', session.client_reference_id);
         // The session contains the client_reference_id (User ID)
         // This is how we know WHOSE cart to delete!
         await Cart.findOneAndDelete({ user: session.client_reference_id });
