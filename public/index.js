@@ -38,26 +38,28 @@ const displayPizzas = async () => {
 
 
 
+if(isLoggedIn){
+    const response1=await fetch('/user/order',{
+        method:'GET',
+        headers:{'Content-Type':'application/json'},
+        credentials:'include'
+    })
+    
+    const resultBasket=await response1.json();
+    const data=resultBasket.data;
 
-        const response1=await fetch('/user/order',{
-            method:'GET',
-            headers:{'Content-Type':'application/json'},
-            credentials:'include'
-        })
-        
-        const resultBasket=await response1.json();
-        const data=resultBasket.data;
+    if(!response1.ok){
+        basket.classList.remove('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
+        basket.style.backgroundColor='transparent';
+        console.log('There is nothing yet in the basket',resultBasket);
+    }else if(response1.ok){
+        if(data.items.length>0){
 
-        if(!response1.ok){
-            basket.classList.remove('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
-            basket.style.backgroundColor='transparent';
-            console.log('There is nothing yet in the basket',resultBasket);
-        }else if(isLoggedIn && response1.ok){
-            if(data.items.length>0){
-
-                basket.classList.add('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
-                basket.style.backgroundColor='red';
-            }
+            basket.classList.add('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
+            basket.style.backgroundColor='red';
+        }
+}
+       
     
         }
         
@@ -124,7 +126,6 @@ const displayPizzas = async () => {
 */
 
 
-displayPizzas();
 
 const displayExtraIngredients=async()=>{
     try{
@@ -156,50 +157,55 @@ ingredients.forEach(ingredient=>{
         console.log('Error:',err.message)
     }
 }
-displayExtraIngredients();
+
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+    displayPizzas();
+    
+    displayExtraIngredients();
+    pizzaContainer.addEventListener('click', async (e)=>{
+        
+    if(e.target.classList.contains('order-btn')){
+    
+        const productCard=e.target.closest('.pizza-card');
+        const productId=productCard.dataset.id;
+        const size=document.querySelector(`input[name="price${productCard.dataset.id}"]:checked`).value;
+    
+    try{
+    const response=await fetch('/user/order',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        credentials:"include",
+        body:JSON.stringify({productId,size})
+    })
+    
+    const result= await response.json();
+    if (response.ok){
+        basket.classList.add('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
+        basket.style.backgroundColor='red';
+        alert('Pizza added to cart!');
+    
+    }else{
+         // Handle server-side errors (e.g., 500, 400, 404)
+         alert(`Failed to add pizza: ${result.message}. Please try again.`);
+    }
+    
+    }
+    catch(err){
+        // alert('Couldnt send the order because:',err.message)
+        // This catch block handles network errors (e.g., server down, no internet)
+        alert(`Could not send the order because: ${err.message}. Check your network connection.`);
+        console.error('Network error:', err);
+    }
+    
+        
+    }
+    
+    })
+})
+
 
 ///////////////////////////////////////
 
 
-
-pizzaContainer.addEventListener('click', async (e)=>{
-    
-if(e.target.classList.contains('order-btn')){
-
-    const productCard=e.target.closest('.pizza-card');
-    const productId=productCard.dataset.id;
-    const size=document.querySelector(`input[name="price${productCard.dataset.id}"]:checked`).value;
-
-try{
-const response=await fetch('/user/order',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    credentials:"include",
-    body:JSON.stringify({productId,size})
-})
-
-const result=response.json();
-if (response.ok){
-    basket.classList.add('animate__animated', 'animate__bounce', 'animate__infinite','animate__slower');
-    basket.style.backgroundColor='red';
-    alert('Pizza added to cart!');
-
-}else{
-     // Handle server-side errors (e.g., 500, 400, 404)
-     const errorData = await response.json().catch(() => ({ message: 'Unknown error' })); // Try to parse JSON error, fallback if not JSON
-     alert(`Failed to add pizza: ${errorData.message || response.statusText}. Please try again.`);
-     console.error('Server error details:', errorData); // Log more details for debugging
-}
-
-}
-catch(err){
-    // alert('Couldnt send the order because:',err.message)
-    // This catch block handles network errors (e.g., server down, no internet)
-    alert(`Could not send the order because: ${err.message}. Check your network connection.`);
-    console.error('Network error:', err);
-}
-
-    
-}
-
-})
