@@ -1,6 +1,6 @@
 const {Pizza,ExtraIngredient}=require('./models');
-
-
+const {seedPizzas,showPizzas,checkBossKey,verifyAdminToken}=require('./src/services/pizzaServices.js')
+const catchAsync=require('./src/utils/catchAsync')
 const fs=require('fs');
 const pizzaData=JSON.parse(fs.readFileSync(`${__dirname}/data.json`,'utf-8'));
 const extraData=JSON.parse(fs.readFileSync(`${__dirname}/extra.json`,'utf-8'));
@@ -52,122 +52,65 @@ res.status(200).json({status:'success',data:extraIngredients})
 
 
 
-exports.importAllPizzas=async(req,res,next)=>{
+exports.importAllPizzas=catchAsync(async(req,res,next)=>{
 
-    try{
-
-        await Pizza.deleteMany();
-        const pizzas=await Pizza.create(pizzaData);
-
+// now intead of using these two mongoose model methods
+// we will use pizzaServices that are detached from req,and res objects
+// so we keep the controller thin
+        // await Pizza.deleteMany();
+        // const pizzas=await Pizza.create(pizzaData);
+        //seedPizzas is a service now which i can even 
+        //try in a terminal with a test script
+        const pizzas=await seedPizzas(pizzaData);
         res.status(201).json({
             status:'success',
             results:pizzas.length,
             data:{pizzas}
         })
-        next();
-
-    }
-    catch(err){
-        console.log("💥 ERROR:", err);
-        res.status(400).json({
-            status:'fail',
-            message:err.message
-        })
-    }
-}
-
-exports.showAllPizzas=async(req,res)=>{
-    try{
-
-
-
-const pizzas=await Pizza.find();
-if(!pizzas){
-    throw new Error('There is no pizzas to show');
-}
-
- res.status(200).json({
-     status:'success',
-     results:pizzas.length,
-     data:{pizzas}
+    //we got rid of try catch by using aq util helper catchAsync which
+    //if something goes wrong, cathes the error and sends it to global error handler
 })
-    }
-    catch(err){
-        console.log('there is an error:',err)
-        res.status(404).json({
-            status:'fail',
-            message:err.message
-        })
-    }
-}
 
-exports.bossLogIn= async(req,res,next)=>{
-try{
+exports.showAllPizzas=catchAsync(async(req,res,next)=>{
+//again using service here which also has custom AppEror
+    const pizzas=await showPizzas();
+    res.status(200).json({
+        status:'success',
+        results:pizzas.length,
+        data:{pizzas}
+   })
+
+} )
+
+    
+
+exports.bossLogIn= catchAsync(async(req,res,next)=>{
     const {key}=req.params;
-    
-    
-    if(key===process.env.SECRET_KEY_URL){
-        console.log('Boss has the key')
-        //payload
-        const payload={
-            role:'admin',
-            site:"Pizzeria Gema",
-            description:"Owner"
-        };
-        const token=jwt.sign(payload,process.env.SECRET_JWT,{expiresIn:'7d'});
-        res.cookie('admin_token',token,{
-            httpOnly:true,
-            secure:true,  
-            sameSite:'None',  //or 'Strict'
-            maxAge:7*24*60*60*1000
-        });
-        // next();
-    //    return res.json({message:'Logged in!'})
-       return res.redirect('/gema/admin/dashboard');
+        const token=await checkBossKey(key);
+        if(token){
+            res.cookie('admin_token',token,{
+                httpOnly:true,
+                secure:process.env.NODE_ENV==='production',  
+                sameSite:'None',  //or 'Strict'
+                maxAge:7*24*60*60*1000
+            });
+           return res.redirect('/gema/admin/dashboard');
 }
 else{
     return res.redirect('/gema/menu');
-    // throw new Error('Boss doesnt have the token');
 }
-}catch(err){
-    console.log(err.message);
-    return res.redirect('/gema/menu');
-    // res.status(400).json({
-    //     status:'fail',
-    //     message:err.message
-    // })
-}
+})
 
-}
-
-exports.protectAdmin =async (req, res, next) => {
-    
-    try{
+exports.protectAdmin = catchAsync(async (req, res, next) => {
         const token = req.cookies.admin_token;
-        // console.log('this is the  admin_token',token)
-    if (!token) throw new Error('Token not provided') 
-// This line "unlocks" the token and gives you back 
-    // the 'bossInfo' object you created earlier
-    const decoded =await jwt.verify(token, process.env.SECRET_JWT);
-    // console.log('this is the decoded:',decoded);
-
-    
-
-    if (decoded.role === 'admin') {
-        // 4. Attach the boss info to the request for later use
+        const decoded =await verifyAdminToken(token);
+        if(!decoded){
+            res.clearCookie('admin_token');
+            res.status(401).json({status:'fail',message:'Invalid or Expired token'})
+        }
         req.admin = decoded;
-        next(); // Allow the price change
-    }else{
-       throw new Error('Forbidden')
-    }
-}catch(err){
-    console.log('this is the last err message',err.message);
-    res.clearCookie('admin_token');
-    res.status(401).json({status:'fail',message:'Invalid or Expired token'})
-}
-
-
-};
+        next(); 
+});
 
 
 exports.findIngredient=async(req,res)=>{
