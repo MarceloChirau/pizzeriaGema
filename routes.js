@@ -80,7 +80,7 @@ router
 
 
 router
-.post('/createPizza',upload.single('image'),createPizza)
+.post('/createPizza',protectAdmin,upload.single('image'),createPizza)
 
 router
 .delete('/deletePizza', protectAdmin,deletePizza);

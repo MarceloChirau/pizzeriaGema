@@ -1,5 +1,19 @@
 const {Pizza,ExtraIngredient}=require('./models');
-const {seedPizzas,showPizzas,checkBossKey,verifyAdminToken}=require('./src/services/pizzaServices.js')
+const {seedPizzas,
+    showPizzas,
+    checkBossKey,
+    verifyAdminToken,
+    findTheIngredient,
+    seedIngredients,
+    showIngredients,
+    deleteIngredient,
+    updateTheIngredient,
+    createTheIngredient,
+    findThePizza,
+    updateThePizza,
+    createThePizza,
+    deleteThePizza
+}=require('./src/services/pizzaServices.js')
 const catchAsync=require('./src/utils/catchAsync')
 const fs=require('fs');
 const pizzaData=JSON.parse(fs.readFileSync(`${__dirname}/data.json`,'utf-8'));
@@ -8,48 +22,15 @@ const crypto=require('crypto');
 const jwt=require('jsonwebtoken');
 
 
-exports.importAllExtraIngredients=async(req,res)=>{
-    try{
-await ExtraIngredient.deleteMany();
-const extraIngredients=await ExtraIngredient.create(extraData);
-if(!extraIngredients){
-  return  res.status(422).json({status:'fail',message:'The data is  invalid'})
-}
+exports.importAllExtraIngredients=catchAsync(async(req,res)=>{
+const extraIngredients=seedIngredients(extraData);
 return res.status(201).json({result:extraIngredients.length,status:'success',data:extraIngredients})
+});
 
-
-    }
-    catch(err){
-        console.log("💥 ERROR:", err);
-        res.status(400).json({
-            status:'fail',
-            message:err.message
-    })
-}
-}
-
-exports.showAllIngredients=async(req,res,next)=>{
-    try{
-const extraIngredients=await ExtraIngredient.find();
-// console.log('this is the extraIngredients',extraIngredients)
-if(!extraIngredients){
-    return res.status(404).json({status:'fail',message:'Couldnt find any extra ingredients'})
-}
+exports.showAllIngredients=catchAsync(async(req,res,next)=>{
+const extraIngredients=await showIngredients();
 res.status(200).json({status:'success',data:extraIngredients})
-
-    }
-    catch(err){
-        console.log('there is an error:',err)
-        res.status(404).json({
-            status:'fail',
-            message:err.message
-    })
-}
-}
-
-
-
-
+})
 
 
 exports.importAllPizzas=catchAsync(async(req,res,next)=>{
@@ -68,7 +49,7 @@ exports.importAllPizzas=catchAsync(async(req,res,next)=>{
             data:{pizzas}
         })
     //we got rid of try catch by using aq util helper catchAsync which
-    //if something goes wrong, cathes the error and sends it to global error handler
+    //if something goes wrong, catches the error and sends it to global error handler
 })
 
 exports.showAllPizzas=catchAsync(async(req,res,next)=>{
@@ -81,8 +62,6 @@ exports.showAllPizzas=catchAsync(async(req,res,next)=>{
    })
 
 } )
-
-    
 
 exports.bossLogIn= catchAsync(async(req,res,next)=>{
     const {key}=req.params;
@@ -113,191 +92,79 @@ exports.protectAdmin = catchAsync(async (req, res, next) => {
 });
 
 
-exports.findIngredient=async(req,res)=>{
-    try{
-        // console.log('this is the req.body:',req.body)
+exports.findIngredient=catchAsync(async(req,res)=>{
         const{item}=req.query;
-        // console.log('Item:',item);
-        // console.log('req.params:',req.params)
-        // console.log('req.query:',req.query)
 
-const ingredient=await ExtraIngredient.findOne({item:{$regex:"^"+item+"$",$options:"i"}})
-// console.log('and this is the ingredientFound: ',ingredient)
-if(!ingredient){
-  return  res.status(404).json({success:'fail',message:'There is no such ingredient'})
-}
+const ingredient=await findTheIngredient(item);
 res.status(200).json({
     status:'success',
     data:ingredient
 })
-    }
-    catch(err){
-        console.log('Couldnt find the ingredient')
-        res.status(400).json({status:'fail',message:err.message})
-    }
-}
+})
 
-exports.updateIngredient=async(req,res)=>{
-    try{
-        console.log('req.query:',req.query);
+exports.updateIngredient=catchAsync( async(req,res)=>{
         const {item}=req.query;
         const{dataToUpdate}=req.body;
-        console.log('req.body: ',req.body)
-const ingredientUpdated=await ExtraIngredient.findOneAndUpdate({item:item.toUpperCase()},dataToUpdate,{new:true,runValidators:true})
-console.log('The ingredientUpdated :',ingredientUpdated);
-if(!ingredientUpdated){
-    throw new Error('Couldnt update any ingredient')
-}
+const ingredientUpdated=await updateTheIngredient(item,dataToUpdate);
+
 res.status(200).json({
     status:'success',
     data:ingredientUpdated
 })
-    }
-    catch(err){
-        res.status(404).json({status:'fail',message:err.message})
-    }
-}
+    
+})
 
 
-exports.findIngredientToDelete=async(req,res)=>{
-    try{
-console.log('req.query:',req.query)
+exports.findIngredientToDelete=catchAsync( async(req,res)=>{
 const {item}=req.query;
-if(!item){
-    throw new Error('Please provide an ingredient name')
-}
 
-
-const deletedIngredient=await ExtraIngredient.findOneAndDelete({item:item.toUpperCase()})
-if(!deletedIngredient){
-    throw new Error('There is no ingredient to delete')
-}
+const deletedIngredient=await deleteIngredient(item);
 
 res.status(200).json({
     status:'success',
     message:'Ingredient Succesfuly deleted',
     data:deletedIngredient
 })
-    }
-    catch(err){
-        res.status(400).json({
-            status:'fail',
-            message:err.message
-        })
-    }
-}
+    
+})
 
 
-exports.createIngredient=async(req,res)=>{
-    try{
+exports.createIngredient=catchAsync( async(req,res)=>{
         const{dataToUse}=req.body;
-        console.log('req.body:',req.body);
-        console.log('dataToUse:',dataToUse)
-if(!dataToUse){
-    res.status(404).json({status:'fail',message:'Please provide data to create new Ingredient'})
-}
-
-const newIngredient= await ExtraIngredient.create({item:dataToUse.item,unit:dataToUse.unit,price:dataToUse.price});
-console.log('newIngredient:',newIngredient)
-if(!newIngredient){
-   return res.status(400).json({status:'fail',message:'Couldnt create new Ingredient!'})
-}else{
- return res.status(201).json({status:'success',data: newIngredient})
-}
-
-    }
-    catch(err){
-        res.status(400).json({
-            status:'fail',
-            message:err.message
-        })
-    }
-}
+const newIngredient= await createTheIngredient(dataToUse);
+ return res.status(201).json({status:'success',data: newIngredient});
+})
 
 
-exports.findPizza=async (req,res)=>{
-    try{
-        console.log('req.query:',req.query);
+exports.findPizza=catchAsync( async (req,res)=>{
         const name=req.query.name;
-const pizza=await Pizza.findOne({name:{$regex:"^"+name+"$",$options:"i"}})
-if(!pizza){
-   return res.status(404).json({status:'fail',message:'There is no pizza with this name'})
-}else{
+const pizza=await findThePizza(name);
+
     res.status(200).json({
 status:'success',
-data:pizza})
-}
-    }
-    catch(err){
-        console.log('couldnt find the pizza:',err.message)
-        res.status(400).json({
-            status:'fail',
-            message:err
-        })
-    }
-}
+data:pizza});
 
-exports.updatePizza=async(req,res)=>{
-    try{
-        // console.log("the req.body:",req.body);
+});
+    
+
+exports.updatePizza=catchAsync( async(req,res)=>{
         const{updateData,id}=req.body;
-        console.log('updateData:',updateData);
-        if(!updateData){
-            return res.status(400).json({status:'fail',message:'Please provide data to update the pizza'})
-        }
-        const updatedPizza=await Pizza.findByIdAndUpdate({_id:id},{name:updateData.name,prices:{small:updateData.prices.small,large:updateData.prices.large},ingredients:updateData.ingredients},{new:true,runValidators:true})
-        if(!updatedPizza){return res.status(404).json({status:'fail',message:'pizza not found'})}
+        const updatedPizza=await updateThePizza(updateData,id);
 res.status(200).json({status:'success',data:updatedPizza})
-    }
-    catch(err){
-        console.log('something went wrong with updating the pizza',err.message)
-        res.status(400).json({status:'fail',message:err.message})
-    }
-}
+})
 
 
-exports.createPizza=async(req,res)=>{
-    try{
-        const newPizza=await Pizza.create({
-            name:req.body.name,
-            prices:{
-                small:req.body.smallPrice,
-                large:req.body.largePrice
-            },
-            ingredients:req.body.ingredients.split(','),
-            image:req.file.filename
-        });
+exports.createPizza=catchAsync( async(req,res)=>{
+    const data=req.body;
+        const newPizza=await createThePizza(data);
+        res.status(201).json({status:'success',data:newPizza});
+    });
 
-        res.status(201).json({status:'success',data:newPizza})
-
-    }
-    catch(err){
-        console.log('This error comes from uploading new pizza',err.message)
-res.status(400).json({status:'fail',message:err.message})
-    }
-}
-exports.deletePizza=async(req,res)=>{
-    try{
-
-
-        const {dataBackup}=req.body;
-        if(!dataBackup){
-            return res.status(400).json({status:'fail',message:'Please provide dataBackup'})
-        }
-        const id=dataBackup._id;
-
-const pizzaToDelete=await Pizza.findByIdAndDelete({_id:id});
-if(!pizzaToDelete){
-    return res.status(400).json({status:'fail',message:'Couldnt find this pizza!'})
-}else{
+exports.deletePizza=catchAsync( async(req,res)=>{
+        const {data}=req.body;
+const pizzaToDelete=await deleteThePizza(data);
     res.status(200).json({
         status:'success',
-        message:'Pizza deleted successfully!'
+        message:'Pizza deleted successfully!',data:pizzaToDelete
     })
-}
-
-    }
-    catch(err){
-        res.status(500).json({status:'fail',message:err.message})
-    }
-}
+})

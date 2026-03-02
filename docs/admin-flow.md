@@ -1,0 +1,6 @@
+# Boss-admin flow:
+We gave a secret link to boss which we also stored in our .env file, so first we have a controller `bossLogIn` wich is using a service `checkBossKey`. So the service is comparing the admin's key with our environmental key, if they are the same then we create a token and we send it to boss by attaching it to the cookie and then we redirect the boss-admin to the secret dashboard page where he can do all his crud operations.
+
+## At the secret dashboard page(`/gema/admin/dashboard`):
+In order for the boss-admin to be able to run any crud operations we created and attach the protectAdmin controller to the route, to run before the controller wich we think that should have the authorization.
+the protectAdmin controller is using the verifyAdminToken which takes the token which is attached and will be passed from the protectAdmin which it gets from req.cookies and inside the service we decoded by supplying the token,the secret_jwt,, if the decode.role has the admin then we will attach to the req.admin property the decoded.So later on when the admin will run any crud operation, the protectAdmin will allow the crud operation. 

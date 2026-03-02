@@ -3,7 +3,7 @@ const cors=require('cors');
 const helmet=require('helmet');
 const rateLimit=require('express-rate-limit');
 const cookieParser = require('cookie-parser');
-const {globalError}=require('./globalError');
+const globalError=require('./src/utils/globalError');
 const path=require('path');
 
 const hpp=require('hpp');
@@ -46,7 +46,7 @@ app.use(helmet({contentSecurityPolicy: false}));
 
 const limiter=rateLimit({
     windowMs:15*60*1000, //15 minutes
-    max:1000, //limit each api to 100 requests per window
+    max:100, //limit each api to 100 requests per window
     message:'Too many requests from this IP, please try again later'
 });
 app.use(limiter);
