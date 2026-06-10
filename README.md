@@ -16,11 +16,22 @@ A full-stack web application for a local pizzeria, built to handle menu manageme
 - **REST API:** Custom endpoints created to manage menu data.
 
 ## Screenshots
+**HomePage**
 ![Home Page](assets/pizzeria-homepage.png)
+
+**Sign Up**
 ![Sign Up](assets/pizzeria-signUp.png)
+
+**Log In**
 ![Log In](assets/pizzeria-logIn.png)
+
+**Basket**
 ![Basket](assets/pizzeria-basket.png)
+
+**Stripe Authentication**
 ![Stripe Authentication](assets/pizzeria-authentication-stripe.png)
+
+**Stripe Payment**
 ![Stripe Pay](assets/pizzeria-pay-stripe.png)
 
 ## Local Setup
@@ -43,4 +54,4 @@ npm run dev
 5. View in browser:
    ```http://localhost:3000```
    ## Author
-   Marcel0 Chirau
+   Marcelo Chirau
