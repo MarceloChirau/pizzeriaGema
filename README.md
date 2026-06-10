@@ -2,6 +2,8 @@
 
 A full-stack web application for a local pizzeria, built to handle menu management. This project focuses on backend routing and server-side logic using Express.js.
 
+
+**Press the thumbnail below to watch a demo of the site**
 [![Watch Demo](https://img.youtube.com/vi/EqZDnldPoLA/maxresdefault.jpg)](https://youtu.be/EqZDnldPoLA)
 
 ## Tech Stack
