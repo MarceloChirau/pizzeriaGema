@@ -2,46 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="format-detection" content="telephone=no">
     
-    <meta name="description" content="Uživajte u najboljoj pizzi u Sisku! Pogledajte naš bogati meni, dodatke i posjetite nas u Rimskoj ulici. Nazovite nas direktno za narudžbe.">
+    <title>Pizzeria Gema | Prijava</title>
+    <meta name="description" content="Prijavite se u svoj Pizzeria Gema račun za brže naručivanje i praćenje vaših omiljenih pizza.">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Login</title>
 </head>
-<body>
-    <header  class="top-bar">
+<body class="auth-page">
+
+    <header class="top-bar">
         <a href="index.html" class="brand-link">
-            <h1  >Pizzeria Gema</h1>
-
+            <h1>Pizzeria Gema</h1>
         </a>
 
-        <a href="tel:+38544521036" class="call-button" aria-label="Call Pizzeria Gema">
-            <i class="fa-solid fa-phone"></i>
-        </a>
-        <span class="phone-number">+38544521036</span>
-       
-
+        <div class="nav-actions">
+            <a href="tel:+38544521036" class="call-button" aria-label="Call Pizzeria Gema">
+                <i class="fa-solid fa-phone"></i>
+                <span class="phone-number">+385 44 521 036</span>
+            </a>
+        </div>
     </header>
 
-    <div class="form-container">
-        <form  id="loginForm">
-            <label for="name">Name:</label>
-            <input id="name" name="name" type="text"  required>
+    <main class="auth-wrapper">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Dobrodošli natrag</h2>
+                <p>Prijavite se u svoj račun</p>
+                <div class="divider"></div>
+            </div>
 
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password" required minlength="5">
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="name">Ime / Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user input-icon"></i>
+                        <input id="name" name="name" type="text" placeholder="Unesite vaše ime" required autocomplete="username">
+                    </div>
+                </div>
 
-<div class="btns-login">
-<button type="submit" id="submitLoginBtn">Submit</button>
-<button type="button" id="cancelLoginBtn">Cancel</button>
-</div>
+                <div class="input-group">
+                    <label for="password">Lozinka / Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input id="password" name="password" type="password" placeholder="••••••••" required minlength="5" autocomplete="current-password">
+                    </div>
+                </div>
 
-        </form>
-    </div>
-<script src="login.js"></script>
+                <div class="btns-login">
+                    <button type="submit" id="submitLoginBtn" class="order-btn">Prijavi se</button>
+                    <button type="button" id="cancelLoginBtn" onclick="window.location.href='index.html'">Odustani</button>
+                </div>
+            </form>
+            
+            <div class="form-footer">
+                <p>Nemate račun? <a href="/signUp.html">Registrirajte se ovdje</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="login.js"></script>
 </body>
 </html>

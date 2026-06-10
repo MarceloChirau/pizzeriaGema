@@ -2,176 +2,232 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <title>Pizzeria Gema </title>
+    <title>Pizzeria Gema | Nadzorna Ploča Admin</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-<body>
-    <main>
-<form class="pizza-form" id="resetForm">
-    <h2>Reset Pizza Menu</h2>
-    <button type="submit" id="resetBtn">Reset Menu</button>
-</form>
-<form class="pizza-form" id="resetIngredientForm">
-    <h2>Reset  Extra Ingredients Menu</h2>
-    <button type="submit" id="resetIngredientBtn">Reset Ingredients</button>
-</form>
+<body class="admin-page">
 
+    <header class="top-bar">
+        <a href="index.html" class="brand-link">
+            <h1>Pizzeria Gema <span class="badge">Admin Portal</span></h1>
+        </a>
+        <div class="nav-actions">
+            <a href="index.html" id="mainPagebtn"><i class="fa-solid fa-arrow-left"></i> Nazad na Početnu</a>
+        </div>
+    </header>
 
-    <form class="pizza-form" id="createPizza" enctype="multipart/form-data">
-        <h2>Create new Pizza</h2>
-
-        <label for="newPizzaName">Pizza-name:</label>
-        <input type="text" id="newPizzaName" autocapitalize="none" required>
+    <main class="admin-dashboard">
         
-        
-        <label for="newSmallPrice">Small Pizza Price: </label>
-        <input type="number" id="newSmallPrice" step="any" required>
-        
-        <label for="newLargePrice">Large Pizza Price: </label>
-        <input type="number" id="newLargePrice" step="any" required>
+        <section class="dashboard-section system-utils full-width">
+            <div class="pizza-form reset-card" id="resetFormWrapper">
+                <form id="resetForm">
+                    <h2><i class="fa-solid fa-rotate-left text-danger"></i> Reset Pizza Menu</h2>
+                    <p class="form-desc">Vraća cijeli meni pizza na tvorničke postavke.</p>
+                    <button type="submit" id="resetBtn" class="btn-danger">Reset Menu</button>
+                </form>
+            </div>
+            
+            <div class="pizza-form reset-card" id="resetIngredientFormWrapper">
+                <form id="resetIngredientForm">
+                    <h2><i class="fa-solid fa-arrows-rotate text-danger"></i> Reset Extra Ingredients Menu</h2>
+                    <p class="form-desc">Vraća sve dodatne sastojke na tvorničke postavke.</p>
+                    <button type="submit" id="resetIngredientBtn" class="btn-danger">Reset Ingredients</button>
+                </form>
+            </div>
+        </section>
 
-        
-        <label for="newIngredients">Ingredients:</label>
-        <textarea id="newIngredients" rows="4" placeholder="e.g. Tomato, Cheese, Basil..." autocapitalize="none" required></textarea>
-        
-       
-
-        <label for="pizzaImage">Pizza Image:</label>
-<div class="uploadElements">
-    <input type="file" id="pizzaImage" name="image" accept="image/*" required hidden>
-    
-    <label for="pizzaImage" class="custom-file-upload">
-        📁 Click to upload pizza photo
-    </label>
-    <span id="file-chosen">Please upload a pizza picture</span>
-</div>
-        
-
-        <button type="submit">Create new Pizza</button>
-    </form>
-
-    <div id="result">
-    </div>
-
-    <form class="pizza-form" id="pizzaToFind">
-            <h2>Find Pizza to Update</h2>
-
-            <div class="form-container">
-                <label for="pizzaName">Pizza-name:</label>
-                <input type="text" id="pizzaName" autocapitalize="none">
-                <small id="foundPizza"></small>
+        <section class="dashboard-column">
+            <div class="column-header">
+                <h3><i class="fa-solid fa-pizza-slice text-primary"></i> Upravljanje Pizzama</h3>
             </div>
 
-
-        <div class='form-container'>
-                 <label for="updatedPizzaName" id="updatedPizzaNameLabel" >Editing </label>
-                     <input type="text" id="updatedPizzaName" placeholder="new pizza name" autocapitalize="none">
-              </div>
-                        
-            
-                   <div class='form-container'>
-              <label for="smallPrice" id="smallPriceLabel" >Current Price for small pizza: </label>
-                  <input type="number" id="smallPrice" step="any"  placeholder="new price for small pizza" >
-              </div>
-                        
-            
-            
-                         <div class='form-container'>
-                    <label for="largePrice"  id="largePriceLabel">Current Price for large pizza: </label>
-                        <input type="number" id="largePrice" step="any"   placeholder="new price for large pizza">
-                  </div>
-                        
-            
-            
-                         <div class='form-container'>
-                    <label for="ingredients" id="ingredientsLabel" >Current Ingredients:</label>
-                        <textarea type="text" id="ingredientsTextArea" placeholder="new ingredients" autocapitalize="none"></textarea>
+            <form class="pizza-form" id="createPizza" enctype="multipart/form-data">
+                <h2>Kreiraj Novu Pizzu</h2>
+                
+                <div class="input-group">
+                    <label for="newPizzaName">Naziv pizze (Name):</label>
+                    <input type="text" id="newPizzaName" placeholder="npr. Margherita" autocapitalize="none" required>
+                </div>
+                
+                <div class="form-row-2">
+                    <div class="input-group">
+                        <label for="newSmallPrice">Cijena (Mala):</label>
+                        <input type="number" id="newSmallPrice" step="any" placeholder="0.00 €" required>
                     </div>
-                        
-                        <button type="submit" id="update-btn" disabled>Update Pizza</button>
-                        <button type='button' id='cancelBtn' >Cancel</button>
+                    <div class="input-group">
+                        <label for="newLargePrice">Cijena (Velika):</label>
+                        <input type="number" id="newLargePrice" step="any" placeholder="0.00 €" required>
+                    </div>
+                </div>
 
-    </form>
- 
-   
-    <!-- <div id="newPizzaUpdated">
-        
-    </div> -->
+                <div class="input-group">
+                    <label for="newIngredients">Sastojci (Ingredients):</label>
+                    <textarea id="newIngredients" rows="3" placeholder="Umak od rajčice, sir, bosiljak..." autocapitalize="none" required></textarea>
+                </div>
 
+                <div class="input-group">
+                    <label>Slika Pizze (Image):</label>
+                    <div class="uploadElements">
+                        <input type="file" id="pizzaImage" name="image" accept="image/*" required hidden>
+                        <label for="pizzaImage" class="custom-file-upload">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Upload Photo
+                        </label>
+                        <span id="file-chosen">Slika nije odabrana</span>
+                    </div>
+                </div>
 
-<form class="pizza-form" id="deletePizza">
-    <h2>Find Pizza to Delete</h2>
-    <label for="deletePizzaName">Pizza-name:</label>
-    <input type="text" id="deletePizzaName" autocapitalize="none">
-    <small id="deleteMsg"></small>
-    <button type="submit" id="deleteBtn" disabled>Delete Pizza</button>
-</form>
-    
+                <button type="submit" class="btn-primary">Spremi Novu Pizzu</button>
+            </form>
 
-<form class="pizza-form" id="createIngredientForm">
-    <h2>Create Ingredient</h2>
-    <label for="createIngredient"> Ingredient:</label>
-    <input type="text" id="createIngredient" autocapitalize="none" placeholder="MASLINE.." required >
+            <div id="result"></div>
 
-    <label for="createUnit">Unit:</label>
-    <input type="text" id="createUnit" placeholder="porcija.." autocapitalize="none">
+            <form class="pizza-form" id="pizzaToFind">
+                <h2>Pronađi i Uredi Pizzu</h2>
 
-    <label for="createPrice" >Price:</label>
-    <input type="number" id="createPrice" required>
-    
-    <button type="submit" id="createIngredientBtn" >Create Ingredient</button>
-</form>
+                <div class="input-group search-group">
+                    <label for="pizzaName">Upiši točan naziv pizze za pretragu:</label>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="pizzaName" placeholder="Traži npr. Capricciosa" autocapitalize="none">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    </div>
+                    <small id="foundPizza" class="status-msg"></small>
+                </div>
 
-<form class="pizza-form" id="findIngredientForm">
-<h2>Find Ingredient to Update </h2>
+                <div class="edit-fields-divider">Uredi Polja</div>
 
-<label for="findIngredient">Ingredient to Update:</label>
-<input type="text" id="findIngredient" placeholder="Masline..." autocapitalize="none">
-<small id="inputMessage"></small>
+                <div class="input-group">
+                    <label for="updatedPizzaName" id="updatedPizzaNameLabel">Novi Naziv Pizze:</label>
+                    <input type="text" id="updatedPizzaName" placeholder="Novi naziv" autocapitalize="none">
+                </div>
+                                
+                <div class="form-row-2">
+                    <div class="input-group">
+                        <label for="smallPrice" id="smallPriceLabel">Nova Cijena (Mala):</label>
+                        <input type="number" id="smallPrice" step="any" placeholder="Nova cijena mala">
+                    </div>
+                    <div class="input-group">
+                        <label for="largePrice" id="largePriceLabel">Nova Cijena (Velika):</label>
+                        <input type="number" id="largePrice" step="any" placeholder="Nova cijena velika">
+                    </div>
+                </div>
 
-<label for="newIngredient" id="labelIngredient">Change Ingredient to:</label>
-<input id="newIngredient" type="text" autocapitalize="none" >
+                <div class="input-group">
+                    <label for="ingredientsTextArea" id="ingredientsLabel">Novi Sastojci:</label>
+                    <textarea id="ingredientsTextArea" rows="3" placeholder="Novi sastojci..." autocapitalize="none"></textarea>
+                </div>
+                                
+                <div class="form-actions-row">
+                    <button type="submit" id="update-btn" class="btn-success" disabled>Ažuriraj Pizzu</button>
+                    <button type="button" id="cancelBtn" class="btn-secondary">Odustani</button>
+                </div>
+            </form>
 
-<label for="unit">Unit:</label>
-<input id="unit" type="text" placeholder="porcija.." autocapitalize="none" >
+            <form class="pizza-form form-danger-zone" id="deletePizza">
+                <h2>Ukloni Pizzu iz Menija</h2>
+                <div class="input-group">
+                    <label for="deletePizzaName">Naziv Pizze za Brisanje:</label>
+                    <input type="text" id="deletePizzaName" placeholder="Upiši naziv za brisanje" autocapitalize="none">
+                    <small id="deleteMsg" class="status-msg danger-text"></small>
+                </div>
+                <button type="submit" id="deleteBtn" class="btn-danger-outline" disabled><i class="fa-solid fa-trash-can"></i> Obriši Pizzu</button>
+            </form>
+        </section>
 
-<label for="price">Price:</label>
-<input type="number" step="any" id="price" placeholder="1.00€" required>
+        <section class="dashboard-column">
+            <div class="column-header">
+                <h3><i class="fa-solid fa-pepper-hot text-primary"></i> Upravljanje Dodacima</h3>
+            </div>
 
-<button id="updateIngredientBtn" type="submit" disabled>Update Ingredient</button>
-</form>
+            <form class="pizza-form" id="createIngredientForm">
+                <h2>Kreiraj Novi Dodatak</h2>
+                
+                <div class="input-group">
+                    <label for="createIngredient">Naziv Sastojka:</label>
+                    <input type="text" id="createIngredient" autocapitalize="none" placeholder="npr. KULEN, MASLINE" required>
+                </div>
 
-<div id="updateIngredientResult">
-</div>
+                <div class="form-row-2">
+                    <div class="input-group">
+                        <label for="createUnit">Mjerna Jedinica:</label>
+                        <input type="text" id="createUnit" placeholder="npr. porcija, kom" autocapitalize="none">
+                    </div>
+                    <div class="input-group">
+                        <label for="createPrice">Cijena (€):</label>
+                        <input type="number" id="createPrice" step="any" placeholder="1.50" required>
+                    </div>
+                </div>
+                
+                <button type="submit" id="createIngredientBtn" class="btn-primary">Kreiraj Dodatak</button>
+            </form>
 
-<form class="pizza-form" id="ingredientToDeleteForm">
-    <h2>Find Ingredient to Delete</h2>
+            <form class="pizza-form" id="findIngredientForm">
+                <h2>Pronađi i Uredi Dodatak</h2>
 
-<label for="ingredientToDelete">Ingredient to Delete:</label>
-<input id="ingredientToDelete" type="text" placeholder="Masline.." autocapitalize="none">
-<small id="ingredientToDeleteMsg"></small>
+                <div class="input-group search-group">
+                    <label for="findIngredient">Naziv Dodatka za Pretragu:</label>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="findIngredient" placeholder="Traži dodatak..." autocapitalize="none">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    </div>
+                    <small id="inputMessage" class="status-msg"></small>
+                </div>
 
-<button type="submit" id="deleteIngredientBtn" disabled>Delete Ingredient</button>
+                <div class="edit-fields-divider">Uredi Polja</div>
 
-</form>
+                <div class="input-group">
+                    <label for="newIngredient" id="labelIngredient">Promijeni Naziv u:</label>
+                    <input id="newIngredient" type="text" placeholder="Novi naziv sastojka" autocapitalize="none">
+                </div>
 
+                <div class="form-row-2">
+                    <div class="input-group">
+                        <label for="unit">Nova Jedinica:</label>
+                        <input id="unit" type="text" placeholder="npr. porcija" autocapitalize="none">
+                    </div>
+                    <div class="input-group">
+                        <label for="price">Nova Cijena (€):</label>
+                        <input type="number" step="any" id="price" placeholder="1.00" required>
+                    </div>
+                </div>
 
+                <button id="updateIngredientBtn" type="submit" class="btn-success" disabled>Ažuriraj Dodatak</button>
+            </form>
 
+            <div id="updateIngredientResult"></div>
 
-  
-</main>
-    
-  
-   
+            <form class="pizza-form form-danger-zone" id="ingredientToDeleteForm">
+                <h2>Ukloni Dodatak</h2>
+                <div class="input-group">
+                    <label for="ingredientToDelete">Naziv Sastojka za Brisanje:</label>
+                    <input id="ingredientToDelete" type="text" placeholder="Upiši naziv za brisanje" autocapitalize="none">
+                    <small id="ingredientToDeleteMsg" class="status-msg danger-text"></small>
+                </div>
+                <button type="submit" id="deleteIngredientBtn" class="btn-danger-outline" disabled><i class="fa-solid fa-trash-can"></i> Obriši Dodatak</button>
+            </form>
+        </section>
+
+    </main>
+       
     <script src="/admin.js"></script>
+    <script>
+        // Inline code to display picked file changes seamlessly
+        const fileInput = document.getElementById('pizzaImage');
+        const fileChosen = document.getElementById('file-chosen');
+        if(fileInput && fileChosen) {
+            fileInput.addEventListener('change', function(){
+                fileChosen.textContent = this.files[0] ? this.files[0].name : "Slika nije odabrana";
+            });
+        }
+    </script>
 </body>
 </html>
