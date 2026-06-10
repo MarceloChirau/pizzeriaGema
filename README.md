@@ -1,6 +1,11 @@
 # Pizzeria Web Application
 
+
+
 A full-stack web application for a local pizzeria, built to handle menu management. This project focuses on backend routing and server-side logic using Express.js.
+
+[![Watch Demo](https://img.youtube.com/vi/EqZDnldPoLA/maxresdefault.jpg)](https://youtu.be/EqZDnldPoLA)
+
 
 ## Tech Stack
 - **Frontend:** HTML, CSS, JavaScript
@@ -19,13 +24,17 @@ A full-stack web application for a local pizzeria, built to handle menu manageme
 
 
 2. Install dependencies:
+ ```bash
    npm install
+```
 
 3. Start the server:
    `node server.js`
 
 4. View in browser:
    http://localhost:3000
+
+
 
 ## Author
 Marcelo Chirau
