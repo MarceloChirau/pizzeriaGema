@@ -41,6 +41,9 @@ A full-stack web application for a local pizzeria, built to handle menu manageme
 **Stripe Payment**
 ![Stripe Pay](assets/pizzeria-pay-stripe.png)
 
+**Admin Dashboard**
+![Admin Dashboard](assets/pizzeria-dashboard.png)
+
 ## Local Setup
 1. Clone the repository:
 ```bash
