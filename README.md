@@ -7,6 +7,10 @@ A full-stack web application for a local pizzeria, built to handle menu manageme
 
 [![Watch Demo](https://img.youtube.com/vi/EqZDnldPoLA/maxresdefault.jpg)](https://youtu.be/EqZDnldPoLA)
 
+**Press the thumbnail below to watch a demo of the dashboard for the admin:**
+[![Watch the Demo Video](https://img.youtube.com/vi/81r7hQySfUg/maxresdefault.jpg)](https://youtu.be/81r7hQySfUg)
+
+
 ## Tech Stack
 - **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Node.js, Express.js
