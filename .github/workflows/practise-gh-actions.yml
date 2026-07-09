@@ -1,6 +1,6 @@
 name: practise github actions
 run-name: ${{ github.actor }} is learning Github Actions
-on:[push]
+on: [push]
     branches:
       - 'feature/gh-actions'
 jobs:
