@@ -1,0 +1,12 @@
+name: practise github actions
+run-name: ${{ github.actor }} is learning Github Actions
+on:[push]
+    branches:
+      - 'feature/gh-actions'
+jobs:
+  my_first_job:
+    name: My first job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node.js
+        run: npm install node
