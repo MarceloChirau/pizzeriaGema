@@ -30,8 +30,8 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm run start
-   # - run: npm dev
+    #- run: npm run start 
+   # - run: npm dev // need to check why is not working
 
   #my_first_job:
     #name: My first job
